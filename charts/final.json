@@ -7,6 +7,17 @@
   },
   "params": [
     {
+      "name": "Temperature_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "name": "Minimum Temperature: "
+      }
+    },
+    {
       "name": "State_Selection",
       "bind": {
         "input": "select",
@@ -33,11 +44,9 @@
     }
   ],
   "transform": [
-    {
-      "filter": "State_Selection == null || datum.State == State_Selection"
-    }
+    {"filter": "datum.TemperatureMean > Temperature_Above"},
+    {"filter": "State_Selection == null || datum.State == State_Selection"}
   ],
-
   "encoding": {
     "x": {
       "field": "RainProportion",
@@ -53,7 +62,7 @@
   "layer": [
     {
       "mark": "circle",
-    },
+      "encoding": {
         "color": {
           "field": "State",
           "type": "nominal",
@@ -87,29 +96,26 @@
       }
     },
 
-
-  {
-  "mark": {
-    "type": "text",
-    "align": "left",
-    "baseline": "middle",
-    "dx": 10,   
-    "dy": -10,  
-    "color": "grey",
-    "fontSize": 12,
-    "fontStyle": "italic"
-  },
-  "transform": [
-    {"filter": "datum['State'] == 'New South Wales' && datum['Month'] == 'Dec-23'"}
-  ],
-  "encoding": {
-    "x": {"field": "RainProportion", "type": "quantitative"},
-    "y": {"field": "Tourists", "type": "quantitative"},
-    "text": {
-      "value": "Peak Tourism in NSW"
-    }
-    }
-  },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 10,
+        "dy": -10,
+        "color": "grey",
+        "fontSize": 12,
+        "fontStyle": "italic"
+      },
+      "transform": [
+        {"filter": "datum['State'] == 'New South Wales' && datum['Month'] == 'Dec-23'"}
+      ],
+      "encoding": {
+        "x": {"field": "RainProportion", "type": "quantitative"},
+        "y": {"field": "Tourists", "type": "quantitative"},
+        "text": {"value": "Peak Tourism in NSW"}
+      }
+    },
 
     {
       "mark": "rule",
@@ -129,10 +135,5 @@
         }
       }
     }
-
-
-
   ]
 }
-
-
